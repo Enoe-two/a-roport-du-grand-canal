@@ -4,8 +4,8 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="hero">
-    <h1>✈️ Bienvenue à l'Aéroport Minecraft</h1>
-    <p>Voyagez à travers le monde Minecraft avec style et sécurité. Réservez vos vols, cargaisons et taxis en quelques clics.</p>
+    <h1>Aéronoé</h1>
+    <p>Voyagez à travers les territoir du serveur de Jules.bb avec style et sécurité. Réservez vos vols, cargaisons et taxis en quelques clics.</p>
 </div>
 
 <div class="grid grid-3">
