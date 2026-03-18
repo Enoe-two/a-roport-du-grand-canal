@@ -1,4 +1,23 @@
 <?php
+
+// ==============================================
+//  DEBUG - affiche les variables env Railway
+// ==============================================
+if (($_GET["action"] ?? "") === "debug") {
+    header("Content-Type: application/json; charset=utf-8");
+    $keys = ["MYSQLHOST","MYSQLUSER","MYSQLPASSWORD","MYSQLDATABASE","MYSQLPORT",
+             "MYSQL_URL","DATABASE_URL","DB_HOST","DB_USER","DB_NAME","RAILWAY_ENVIRONMENT"];
+    $out = [];
+    foreach ($keys as $k) {
+        $val = getenv($k);
+        if ($val !== false && in_array($k, ["MYSQLPASSWORD","DB_PASS","MYSQL_URL","DATABASE_URL"])) {
+            $val = "***MASQUE*** (" . strlen($val) . " chars)";
+        }
+        $out[$k] = $val !== false ? $val : "NON DEFINI";
+    }
+    echo json_encode(["env" => $out, "php_version" => phpversion()], JSON_PRETTY_PRINT);
+    exit;
+}
 // ══════════════════════════════════════════════════════════════
 //  API JSON — DOIT être avant tout output HTML
 // ══════════════════════════════════════════════════════════════
