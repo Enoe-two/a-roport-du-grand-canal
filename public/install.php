@@ -6,18 +6,33 @@ if (($_GET['action'] ?? '') === 'run') {
     header('Content-Type: application/json; charset=utf-8');
     ini_set('display_errors', '0'); // évite que PHP pollue le JSON avec des warnings
 
-    $host = getenv('MYSQLHOST')     ?: getenv('DB_HOST')     ?: 'localhost';
+    $host = getenv('MYSQLHOST') ?: getenv('DB_HOST') ?: '';
     $user = getenv('MYSQLUSER')     ?: getenv('DB_USER')     ?: 'root';
     $pass = getenv('MYSQLPASSWORD') ?: getenv('DB_PASS')     ?: '';
-    $name = getenv('MYSQLDATABASE') ?: getenv('DB_NAME')     ?: 'minecraft_airport';
+    $name = getenv('MYSQLDATABASE') ?: getenv('DB_NAME') ?: 'railway';
     $port = getenv('MYSQLPORT')     ?: getenv('DB_PORT')     ?: '3306';
+
+    // Fallback MYSQL_URL si les variables individuelles sont absentes
+    if (!$host) {
+        $url = getenv('MYSQL_URL') ?: getenv('DATABASE_URL') ?: '';
+        if ($url) {
+            $p    = parse_url($url);
+            $host = $p['host'] ?? '127.0.0.1';
+            $user = $p['user'] ?? 'root';
+            $pass = $p['pass'] ?? '';
+            $name = ltrim($p['path'] ?? '/railway', '/');
+            $port = $p['port'] ?? '3306';
+        } else {
+            $host = '127.0.0.1';
+        }
+    }
 
     $results = [];
     $tablesCreated = $tablesExisting = 0;
 
     // 1. Connexion
     try {
-        $pdo = new PDO("mysql:host={$host};port={$port};charset=utf8mb4", $user, $pass, [
+        $pdo = new PDO("mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4", $user, $pass, [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
