@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Connexion - Aéroport Minecraft';
-require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/includes/functions.php';
 
 // Si déjà connecté, rediriger
 if (isLoggedIn()) {
