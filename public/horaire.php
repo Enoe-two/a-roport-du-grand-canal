@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Horaires - Aéroport Minecraft';
-require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/includes/functions.php';
 
 $pdo = getDB();
 
