@@ -1,5 +1,20 @@
 [phases.setup]
-nixPkgs = ["php82", "php82Extensions.pdo", "php82Extensions.pdo_mysql", "php82Extensions.mysqli", "php82Extensions.mbstring", "php82Extensions.curl", "php82Extensions.openssl"]
+nixPkgs = [
+  "php82",
+  "php82Extensions.pdo",
+  "php82Extensions.pdo_mysql",
+  "php82Extensions.mysqli",
+  "php82Extensions.mysqlnd",
+  "php82Extensions.mbstring",
+  "php82Extensions.curl",
+  "php82Extensions.openssl",
+  "php82Extensions.sockets"
+]
+
+[phases.build]
+cmds = [
+  "php -r \"echo 'PDO drivers: '; print_r(PDO::getAvailableDrivers());\""
+]
 
 [start]
-cmd = "php -S 0.0.0.0:$PORT -t public"
+cmd = "php -c /app/php.ini -S 0.0.0.0:$PORT -t public"

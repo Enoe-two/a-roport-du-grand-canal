@@ -51,10 +51,15 @@ if (($_GET['action'] ?? '') === 'run') {
 
     // 1. Connexion
     try {
-        $pdo = new PDO("mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4", $user, $pass, [
+        // Forcer TCP/IP (pas de socket Unix) + timeout court
+        $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]);
+            PDO::ATTR_TIMEOUT            => 10,
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4",
+        ];
+        $dsn = "mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4";
+        $pdo = new PDO($dsn, $user, $pass, $options);
         $results['connexion'] = ['ok' => true, 'msg' => "Connecté à {$host}:{$port}"];
     } catch (Exception $e) {
         echo json_encode([
