@@ -16,8 +16,8 @@
         </div>
         <div class="footer-section">
             <h4>Contact</h4>
-            <p>Discord : votre-serveur</p>
-            <p>MC : votre.serveur.mc</p>
+            <p>Discord : Empreur64</p>
+            <p>MC : Julesbb.aternos.me</p>
         </div>
     </div>
     <div class="footer-bottom">
